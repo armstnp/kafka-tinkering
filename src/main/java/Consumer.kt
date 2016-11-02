@@ -5,7 +5,7 @@ import java.util.*
 
 fun main(args: Array<String>) {
     val props = Properties().apply {
-        put("bootstrap.servers", "<IPs Here>")
+        put("bootstrap.servers", "35.162.160.212:9092,35.162.87.170:9092")
         put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
         put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
     }

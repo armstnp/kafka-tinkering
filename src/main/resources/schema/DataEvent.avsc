@@ -1,0 +1,13 @@
+{"namespace": "avro.models",
+  "type": "record",
+  "name": "DataEvent",
+  "fields": [
+    {"name": "event_id", "type": "int"},
+    {"name": "timestamp",  "type": "string"},
+    {"name": "database",  "type": "string"},
+    {"name": "table",  "type": "string"},
+    {"name": "column",  "type": "string"},
+    {"name": "old_value",  "type": "string"},
+    {"name": "new_value", "type": "string"}
+  ]
+}

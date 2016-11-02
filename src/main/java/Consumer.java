@@ -6,7 +6,7 @@ import java.util.*;
 public class Consumer {
 	public static void main(String[] args) {
 		Properties props = new Properties();
-		props.put("bootstrap.servers", "<IPs Here>");
+		props.put("bootstrap.servers", "35.162.160.212:9092,35.162.87.170:9092");
 		props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 		props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 
