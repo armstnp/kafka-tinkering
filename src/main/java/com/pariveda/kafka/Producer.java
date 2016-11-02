@@ -1,7 +1,5 @@
-import org.apache.avro.io.BinaryEncoder;
-import org.apache.avro.io.DatumWriter;
-import org.apache.avro.io.EncoderFactory;
-import org.apache.avro.specific.SpecificDatumWriter;
+package com.pariveda.kafka;
+
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
@@ -32,20 +30,7 @@ public class Producer {
 									.setNewValue("newValue")
 									.build();
 
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			BinaryEncoder encoder = EncoderFactory.get().binaryEncoder(out, null);
-			DatumWriter<DataEvent> writer = new SpecificDatumWriter<DataEvent>(DataEvent.getClassSchema());
-
-			writer.write(dataEvent, encoder);
-			encoder.flush();
-			out.close();
-
-			byte[] serializedBytes = out.toByteArray();
-
-			//String eventString = dataEvent.toString();
-			//System.out.println(eventString);
-
-			producer.send(new ProducerRecord<>("my-topic", Integer.toString(1), serializedBytes));
+			//producer.send(new ProducerRecord<>("my-topic", Integer.toString(1), serializedBytes));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

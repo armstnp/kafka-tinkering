@@ -1,3 +1,5 @@
+package com.pariveda.kafka;
+
 import org.apache.kafka.clients.consumer.*;
 import org.apache.kafka.common.TopicPartition;
 
