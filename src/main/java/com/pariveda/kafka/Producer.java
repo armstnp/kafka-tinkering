@@ -1,6 +1,8 @@
 package com.pariveda.kafka;
 
 import avro.models.DataEvent;
+import com.pariveda.kafka.helpers.DataEventHelper;
+
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
@@ -14,19 +16,14 @@ public class Producer {
 		props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 		props.put("value.serializer", "com.pariveda.kafka.serialization.DataEventAvroSerializer");
 
-		try (KafkaProducer<String, DataEvent> producer = new KafkaProducer<>(props)) {
-			DataEvent dataEvent = DataEvent.newBuilder()
-									.setEventId(1)
-									.setTimestamp("timestamp")
-									.setDatabase("database")
-									.setTable("table")
-									.setColumn("column")
-									.setOldValue("oldValue")
-									.setNewValue("newValue")
-									.build();
+		int numEvents = Integer.parseInt(args[0], 10);
 
-			ProducerRecord<String, DataEvent> record = new ProducerRecord<>("data-event-source", "database:table", dataEvent);
-			producer.send(record);
+		try (KafkaProducer<String, DataEvent> producer = new KafkaProducer<>(props)) {
+			for (int i = 0; i < numEvents; i++) {
+				DataEvent dataEvent = DataEventHelper.generateDataEvent(i);
+				ProducerRecord<String, DataEvent> record = new ProducerRecord<>("data-event-source", "database:table", dataEvent);
+				producer.send(record);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
