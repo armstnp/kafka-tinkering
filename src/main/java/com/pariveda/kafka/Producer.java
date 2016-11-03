@@ -21,11 +21,16 @@ public class Producer {
 		try (KafkaProducer<String, DataEvent> producer = new KafkaProducer<>(props)) {
 			for (int i = 0; i < numEvents; i++) {
 				DataEvent dataEvent = DataEventHelper.generateDataEvent(i);
-				ProducerRecord<String, DataEvent> record = new ProducerRecord<>("data-event-source", "database:table", dataEvent);
+				ProducerRecord<String, DataEvent> record =
+						new ProducerRecord<>("data-event-source", buildKeyFromDataEvent(dataEvent), dataEvent);
 				producer.send(record);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private static String buildKeyFromDataEvent(DataEvent dataEvent) {
+		return String.format("%s:%s", dataEvent.getDatabase(), dataEvent.getTable());
 	}
 }
