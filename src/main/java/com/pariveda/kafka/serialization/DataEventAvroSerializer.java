@@ -22,7 +22,7 @@ public class DataEventAvroSerializer implements Serializer<DataEvent> {
 	@Override
 	public byte[] serialize(String topic, DataEvent event) {
 		try(ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-			BinaryEncoder encoder = EncoderFactory.get().binaryEncoder(out, null);
+			BinaryEncoder encoder = EncoderFactory.get().binaryEncoder(out, null); //TODO: Determine whether reuse is viable
 			DatumWriter<DataEvent> writer = new SpecificDatumWriter<>(DATA_EVENT_SCHEMA);
 
 			writer.write(event, encoder);
