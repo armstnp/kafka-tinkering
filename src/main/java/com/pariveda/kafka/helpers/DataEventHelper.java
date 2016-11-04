@@ -11,11 +11,11 @@ public class DataEventHelper {
     private static final String[] tables = {"customer", "user", "order", "status", "location"};
 
     private static final Random random = new Random();
-    private static final String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
-
     private static int eventId = 0;
 
     public static DataEvent generateDataEvent() {
+        String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
+
         DataEvent dataEvent = DataEvent.newBuilder()
                 .setEventId(eventId++)
                 .setTimestamp(timeStamp)
