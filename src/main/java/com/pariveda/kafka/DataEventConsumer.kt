@@ -1,3 +1,6 @@
+package com.pariveda.kafka
+
+import avro.models.DataEvent
 import org.apache.kafka.clients.consumer.ConsumerRecords
 import org.apache.kafka.clients.consumer.KafkaConsumer
 import org.apache.kafka.common.TopicPartition
@@ -5,16 +8,24 @@ import java.util.*
 
 fun main(args: Array<String>) {
     val props = Properties().apply {
-        put("bootstrap.servers", "<IPs Here>")
+        put("bootstrap.servers", "35.162.160.212:9092,35.162.87.170:9092")
         put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
         put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
+        put("value.deserializer", "com.pariveda.kafka.serialization.DataEventAvroDeserializer")
     }
 
-    val partition = args[0].toInt()
-    val topicPartitions = listOf(TopicPartition("my-topic", partition))
+    if(args.size < 2) {
+        System.out.println("Usage: java AvroConsumer <topic> <partition #>")
+        System.exit(1)
+    }
+
+    val topic = args[0]
+    val partition = args[1].toInt()
+
+    val topicPartitions = listOf(TopicPartition(topic, partition))
 
     try {
-        KafkaConsumer<String, String>(props).use { consumer ->
+        KafkaConsumer<String, DataEvent>(props).use { consumer ->
             consumer.assign(topicPartitions)
             consumer.seekToBeginning(topicPartitions)
 
@@ -25,10 +36,11 @@ fun main(args: Array<String>) {
         }
     } catch(e: Exception) {
         e.printStackTrace()
+        throw e
     }
 }
 
-private fun processMessages(messages: ConsumerRecords<String, String>) =
+private fun processMessages(messages: ConsumerRecords<String, DataEvent>) =
         messages.forEach {
             System.out.println(
                     "Topic: ${it.topic()}, " +
