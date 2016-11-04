@@ -13,9 +13,11 @@ public class DataEventHelper {
     private static final Random random = new Random();
     private static final String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
 
-    public static DataEvent generateDataEvent(int id) {
+    private static int eventId = 0;
+
+    public static DataEvent generateDataEvent() {
         DataEvent dataEvent = DataEvent.newBuilder()
-                .setEventId(id)
+                .setEventId(eventId++)
                 .setTimestamp(timeStamp)
                 .setDatabase(databases[random.nextInt(databases.length)])
                 .setTable(tables[random.nextInt(tables.length)])

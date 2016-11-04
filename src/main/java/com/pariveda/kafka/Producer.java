@@ -1,6 +1,8 @@
 package com.pariveda.kafka;
 
 import avro.models.DataEvent;
+
+import com.google.common.util.concurrent.RateLimiter;
 import com.pariveda.kafka.helpers.DataEventHelper;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -16,14 +18,18 @@ public class Producer {
 		props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 		props.put("value.serializer", "com.pariveda.kafka.serialization.DataEventAvroSerializer");
 
-		int numEvents = Integer.parseInt(args[0], 10);
+		int eventsPerSecond = Integer.parseInt(args[0], 10);
+		RateLimiter limiter = RateLimiter.create(eventsPerSecond);
 
 		try (KafkaProducer<String, DataEvent> producer = new KafkaProducer<>(props)) {
-			for (int i = 0; i < numEvents; i++) {
-				DataEvent dataEvent = DataEventHelper.generateDataEvent(i);
-				ProducerRecord<String, DataEvent> record =
-						new ProducerRecord<>("data-event-source", buildKeyFromDataEvent(dataEvent), dataEvent);
+			while (true) {
+				limiter.acquire();
+
+				DataEvent dataEvent = DataEventHelper.generateDataEvent();
+				ProducerRecord<String, DataEvent> record = new ProducerRecord<>("data-event-source", buildKeyFromDataEvent(dataEvent), dataEvent);
 				producer.send(record);
+
+				System.out.println("Sent data event: " + dataEvent);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
