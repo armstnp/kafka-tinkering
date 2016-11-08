@@ -55,6 +55,11 @@
 			<artifactId>commons-beanutils</artifactId>
 			<version>1.9.3</version>
 		</dependency>
+		<dependency>
+			<groupId>com.timgroup</groupId>
+			<artifactId>java-statsd-client</artifactId>
+			<version>3.1.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
