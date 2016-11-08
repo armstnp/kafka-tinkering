@@ -1,10 +1,9 @@
 package com.pariveda.kafka;
 
 import avro.models.DataEvent;
-
 import com.google.common.util.concurrent.RateLimiter;
+import com.pariveda.kafka.helpers.ConfigurationHelper;
 import com.pariveda.kafka.helpers.DataEventHelper;
-
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
@@ -12,11 +11,7 @@ import java.util.Properties;
 
 public class Producer {
 	public static void main(String[] args) {
-		Properties props = new Properties();
-
-		props.put("bootstrap.servers", "35.162.160.212:9092,35.162.87.170:9092");
-		props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-		props.put("value.serializer", "com.pariveda.kafka.serialization.DataEventAvroSerializer");
+		Properties props = ConfigurationHelper.getProducerProperties("kafka");
 
 		int eventsPerSecond = Integer.parseInt(args[0], 10);
 		RateLimiter limiter = RateLimiter.create(eventsPerSecond);
