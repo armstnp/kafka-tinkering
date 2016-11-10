@@ -1,4 +1,4 @@
-package com.pariveda.kafka.helpers;
+package com.pariveda.kafka.common;
 
 import avro.models.DataEvent;
 
@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
-public class DataEventHelper {
+public class DataEventFactory {
     private static final String[] databases = {"xyz", "abc", "foo", "bar", "db1", "db2"};
     private static final String[] tables = {"customer", "user", "order", "status", "location"};
 
