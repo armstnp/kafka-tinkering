@@ -47,7 +47,7 @@
   * Low latency between nodes
 
 ### Software ###
-* JRE 6+ (_RPMs available on Oracle download page_)
+* JRE 7+ (_RPMs available on Oracle download page_)
 * Prefer to use the Zookeeper JAR and run scripts packaged alongside Kafka.
 
 -----
