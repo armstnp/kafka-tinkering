@@ -23,7 +23,7 @@
    * High bandwidth
 
 ### Software ###
-* JRE 6+ (preferably 8+) (_RPMs available on Oracle download page_)
+* JRE 8 (_RPMs available on Oracle download page_)
 * Scala Runtime (see version of Kafka for min. version required) (_RPMs available_)
 * Will need to create an RPM for the brokers themselves
 
@@ -47,7 +47,7 @@
   * Low latency between nodes
 
 ### Software ###
-* JRE 7+ (_RPMs available on Oracle download page_)
+* JRE 8 (_RPMs available on Oracle download page_)
 * Prefer to use the Zookeeper JAR and run scripts packaged alongside Kafka.
 
 -----
