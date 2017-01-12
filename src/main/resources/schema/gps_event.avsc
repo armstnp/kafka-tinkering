@@ -1,0 +1,51 @@
+{
+    "namespace": "zonar.position_upload",
+    "type": "record",
+    "name": "PositionUpload",
+    "fields": [
+        {"name": "device_id",  "type": "long"},
+        {"name": "type", "type": "int"},
+        {"name": "ts", "type": ["null", "long"], "logicalType": "timestamp-millis"},
+        {"name": "count", "type": ["null", "int"]},
+        {"name": "skipcount", "type": ["null", "int"]},
+        {"name": "first_ts", "type": ["null", "long"], "logicalType": "timestamp-millis"},
+        {"name": "last_ts", "type": ["null", "long"], "logicalType": "timestamp-millis"},
+        {"name": "addr", "type": "string"},
+        {"name": "sftware", "type": ["null", "string"]},
+        {"name": "version", "type": ["null", "string"]},
+        {"name": "logvers", "type": "int"},
+        {
+            "name": "payload",
+            "type": {
+                "type": "array",
+                "items": {
+                    "name": "GPSPoint",
+                    "type": "record",
+                    "fields": [
+                       {"name": "timestamp", "type": "long", "logicalType": "timestamp-millis"},
+                       {"name": "latitude", "type": "double"},
+                       {"name": "longitude", "type": "double"},
+                       {"name": "speed", "type": "double"},
+                       {"name": "acceleration", "type": "double"},
+                       {"name": "heading", "type": "double"},
+                       {"name": "odometer", "type": "long"},
+                       {"name": "status", "type": "long"},
+                       {"name": "fuel_used", "type": "long"},
+                       {"name": "ext_air_temp", "type": "int"},
+                       {"name": "ext_air_pressure", "type": "int"},
+                       {"name": "avg_rpm", "type": "int"},
+                       {"name": "peak_rpm", "type": "int"},
+                       {"name": "avg_torque", "type": "int"},
+                       {"name": "avg_load", "type": "int"},
+                       {"name": "fuel_level", "type": "int"},
+                       {"name": "avg_boost_pressure", "type": "int"},
+                       {"name": "avg_fuel_filter_diff_pressure", "type": "int"},
+                       {"name": "avg_air_filter_diff_pressure", "type": "int"},
+                       {"name": "avg_dpf_diff_pressure", "type": "int"},
+                       {"name": "regen_status", "type": "int"}
+                    ]
+                }
+            }
+        }
+    ]
+}
